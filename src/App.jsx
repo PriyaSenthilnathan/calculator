@@ -1,16 +1,35 @@
-import react, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
-
 
 function App(){
 
   const[value, setValue] = useState(' ');
-  
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      const key = e.key;
+      if ((key >= '0' && key <= '9') || key === '.' || key === '/' || key === '*' || key === '-' || key === '+') {
+        setValue(prev => prev + key);
+      } else if (key === 'Enter') {
+        setValue(prev => eval(prev).toString());
+      } else if (key === 'Backspace') {
+        setValue(prev => prev.slice(0, -1));
+      } else if (key === 'Escape') {
+        setValue(' ');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   return(
   
     <div className="container">
-      <div className= "name"><h3>Simple Calculator</h3>
-      </div>
+      <h1><strong>Simple Calculator</strong></h1>
       <div className="calculator">
         <form>
           <div className="display">
@@ -45,13 +64,9 @@ function App(){
             <input type = "button" value = "0" onClick={ e => setValue( value + e.target.value)} />
             <input type = "button" value = "=" className="equal" onClick={ e => setValue(eval(value))}/>
           </div>
-
-
         </form>
-
       </div>
     </div>
-
   );
 }
 
