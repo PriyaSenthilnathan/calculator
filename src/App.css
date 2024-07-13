@@ -59,3 +59,18 @@ form .display input {
 form input.equal {
   width: 128px;
 }
+
+form input[type="button"][disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+form .mode-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+form .mode-buttons input {
+  width: 130px; /* Adjust width as needed */
+}
